@@ -1,19 +1,11 @@
-pipeline {
-    agent any
-
-    stages{
-    stage('sonarjenkins') {
-    environment {
-        scannerHome = tool 'sonarqube'
+node {
+  stage('SCM') {
+    git 'https://github.com/deepakMaison/jenkins-php.git'
+  }
+  stage('SonarQube analysis') {
+    def scannerHome = tool 'sonarqube';
+    withSonarQubeEnv('sonarjenkins') { // If you have configured more than one global server connection, you can specify its name
+      sh "${scannerHome}/bin/sonar-scanner"
     }
-    steps {
-        withSonarQubeEnv('sonarjenkins') {
-            sh "${scannerHome}/bin/sonar-scanner"
-        }
-        timeout(time: 10, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
-        }
-    }
-}
-}
+  }
 }
