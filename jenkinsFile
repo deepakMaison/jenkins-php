@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+    stages{
     stage('sonarjenkins') {
     environment {
         scannerHome = tool 'sonarqube'
@@ -13,5 +14,6 @@ pipeline {
             waitForQualityGate abortPipeline: true
         }
     }
+}
 }
 }
