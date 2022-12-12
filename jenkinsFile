@@ -1,4 +1,7 @@
-node {
+pipeline {
+    agent any
+
+    stages{
   stage('SCM') {
     git 'https://github.com/deepakMaison/jenkins-php.git'
   }
@@ -9,3 +12,5 @@ node {
     }
   }
 }
+}
+
